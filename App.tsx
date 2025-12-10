@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import SummaryCards from './components/SummaryCards';
 import OpenPositionPanel from './components/OpenPositionPanel';
 import ChartsSection from './components/ChartsSection';
@@ -48,11 +49,17 @@ function App() {
       {/* Header */}
       <header className="bg-black border-b border-white/10 sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(115,0,189,0.5)]" style={{ backgroundColor: '#7300BD' }}>
-              A
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(115,0,189,0.5)]" style={{ backgroundColor: '#7300BD' }}>
+                A
+              </div>
+              <h1 className="text-xl font-bold tracking-tight text-white">AlgoStrategy <span style={{ color: '#7300BD' }}>Pro</span></h1>
             </div>
-            <h1 className="text-xl font-bold tracking-tight text-white">AlgoStrategy <span style={{ color: '#7300BD' }}>Pro</span></h1>
+            <nav className="flex items-center gap-4 border-l border-white/10 pl-4">
+              <Link to="/" className="text-xs font-medium text-slate-400 hover:text-white transition">Dashboard</Link>
+              <Link to="/charts" className="text-xs font-medium text-slate-400 hover:text-white transition">Charts</Link>
+            </nav>
           </div>
           <div className="flex items-center gap-4 text-xs text-slate-500">
              <div className="flex items-center gap-2">
