@@ -29,6 +29,7 @@ export interface StatusResponse {
   entry_time: string | null;
   entry_price: number | null;
   current_price: number;
+  last_price_time: string | null; // ISO timestamp of the last price from yfinance
   pnl_points: number;
   pnl_money: number;
   today_pnl_money: number;

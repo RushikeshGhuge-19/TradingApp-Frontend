@@ -13,7 +13,7 @@ const transformStatusResponse = (data: StatusResponse): FrontendStatus => {
     today_pnl: data.today_pnl_money,
     max_drawdown: data.max_drawdown_pct,
     current_trailing_stop: data.current_stop,
-    lot_size: 15, // Default lot size for BANKNIFTY
+    lot_size: 30, // Default lot size for BANKNIFTY
   };
 };
 
@@ -102,6 +102,7 @@ const mockFetchStatus = async (): Promise<FrontendStatus> => {
     entry_time: null,
     entry_price: null,
     current_price: 44500.0,
+    last_price_time: new Date().toISOString(),
     pnl_points: 0.0,
     pnl_money: 0.0,
     today_pnl_money: 0.0,
