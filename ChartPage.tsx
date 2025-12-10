@@ -19,7 +19,7 @@ function ChartPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
-  // Convert equity points to candles (group by 5-point intervals for better visualization)
+  // Convert equity points to candles (group by 30m intervals matching backend)
   const generateCandles = (equityData: EquityPoint[]) => {
     if (equityData.length < 2) return [];
     
@@ -34,7 +34,10 @@ function ChartPage() {
       const close = group[group.length - 1].equity;
       const high = Math.max(...group.map(e => e.equity));
       const low = Math.min(...group.map(e => e.equity));
-      const timeStr = new Date(group[0].time).toLocaleTimeString();
+      const timeStr = new Date(group[group.length - 1].time).toLocaleTimeString();
+      
+      // Candle is bullish if close > open, bearish if close < open
+      const isUp = close > open;
       
       candleList.push({
         time: timeStr,
@@ -42,7 +45,7 @@ function ChartPage() {
         high,
         low,
         close,
-        isUp: close >= open,
+        isUp,
       });
     }
     return candleList;
@@ -53,8 +56,16 @@ function ChartPage() {
     const loadData = async () => {
       try {
         const equityData = await fetchEquityCurve();
-        setEquity(equityData);
-        const newCandles = generateCandles(equityData);
+        
+        // Filter to only show data up to current time (IST timezone)
+        const now = new Date();
+        const filteredEquity = equityData.filter(point => {
+          const pointTime = new Date(point.time);
+          return pointTime <= now;
+        });
+        
+        setEquity(filteredEquity);
+        const newCandles = generateCandles(filteredEquity);
         setCandles(newCandles);
         setLastUpdated(new Date());
       } catch (error) {
